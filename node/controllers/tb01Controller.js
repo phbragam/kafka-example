@@ -1,8 +1,9 @@
 const tb01Service = require('../services/tb01Service.js');
 const HttpStatusCodes = require('../utils/constants/httpStatusCodes.js');
 const ErrorMessages = require('../utils/messages/errorMessages.js');
+const producer = require('../services/kafka/producer.js');
 
-function formatServiceResponse (response) {
+function formatServiceResponse(response) {
     const { httpStatus, error, ...formattedResponse } = response;
     return formattedResponse;
 };
@@ -11,11 +12,11 @@ function formatServiceResponse (response) {
 // Lida com os objetos request e response
 const tb01Controller = {
     async findAll(req, res) {
-        
+
     },
 
     async findById(req, res) {
-        
+
     },
 
     async create(req, res) {
@@ -32,7 +33,15 @@ const tb01Controller = {
 
         try {
             const response = await tb01Service.create(req.body);
-            const formattedResponse = formatServiceResponse(response); 
+            const formattedResponse = formatServiceResponse(response);
+            
+            // escrevendo topico no kafka
+            const message = formattedResponse?.data?.col_texto;
+            await producer.send({
+                topic: 'topic-1',
+                messages: [{ value: message }],
+            });
+
             return res.status(response.httpStatus).json({ response: formattedResponse });
         } catch (err) {
             return res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({ erro: err.message });
@@ -40,11 +49,11 @@ const tb01Controller = {
     },
 
     async update(req, res) {
-        
+
     },
 
     async delete(req, res) {
-        
+
     }
 }
 
