@@ -8,8 +8,8 @@ function formatServiceResponse(response) {
     return formattedResponse;
 };
 
-// Validações diretas
-// Lida com os objetos request e response
+// Direct validations
+// Deal with request and response objects
 const tb01Controller = {
     async findAll(req, res) {
 
@@ -35,7 +35,7 @@ const tb01Controller = {
             const response = await tb01Service.create(req.body);
             const formattedResponse = formatServiceResponse(response);
             
-            // escrevendo topico no kafka
+            // writing on Kafka topic
             const message = formattedResponse?.data?.col_texto;
             await producer.send({
                 topic: 'topic-1',

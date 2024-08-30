@@ -1,5 +1,6 @@
 const kafka = require('./kafkaClient');
 const producer = require('./producer.js');
+const HttpStatusCodes = require('../../utils/constants/httpStatusCodes.js');
 
 const consumer = kafka.consumer({ groupId: 'my-group' });
 
@@ -11,14 +12,18 @@ const runConsumer = async () => {
         eachMessage: async ({ topic, partition, message }) => {
             const msgString = message.value.toString();
             console.log(`Received message: ${msgString}`);
-             // escrevendo topico no kafka
-             // add try catch
-             await producer.send({
-                 topic: 'topic-2',
-                 messages: [{ value: msgString }],
-             });
+            // writing on Kafka topic
+            try {
+
+                await producer.send({
+                    topic: 'topic-2',
+                    messages: [{ value: msgString }],
+                });
+            } catch(err){
+                return res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({ erro: err.message });
+            }
         },
     });
 };
 
-module.exports =  runConsumer;
+module.exports = runConsumer;
