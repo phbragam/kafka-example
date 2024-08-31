@@ -5,7 +5,7 @@ const authorization = require('../middlewares/authorizationMiddlware.js');
 
 const router = Router();
 
-// Mapeia url para os metodos de controller apropriados
+// Maps urls to controllers methods
 router.get('/tb01', (req, res) => {
     tb01Controller.findAll(req, res)
 });

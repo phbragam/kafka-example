@@ -1,7 +1,6 @@
 const tb01Service = require('../services/tb01Service.js');
 const HttpStatusCodes = require('../utils/constants/httpStatusCodes.js');
 const ErrorMessages = require('../utils/messages/errorMessages.js');
-const producer = require('../services/kafka/producer.js');
 
 function formatServiceResponse(response) {
     const { httpStatus, error, ...formattedResponse } = response;
@@ -34,13 +33,6 @@ const tb01Controller = {
         try {
             const response = await tb01Service.create(req.body);
             const formattedResponse = formatServiceResponse(response);
-            
-            // writing on Kafka topic
-            const message = formattedResponse?.data?.col_texto;
-            await producer.send({
-                topic: 'tb01.post',
-                messages: [{ value: message }],
-            });
 
             return res.status(response.httpStatus).json({ response: formattedResponse });
         } catch (err) {

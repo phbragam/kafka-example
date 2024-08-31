@@ -1,6 +1,6 @@
 const Tb01 = require('../models/tb01.js');
 
-// Interage com o banco de dados
+// Database interactions
 const tb01Repository = {
     async findAll() {
         
