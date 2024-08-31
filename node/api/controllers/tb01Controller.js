@@ -38,7 +38,7 @@ const tb01Controller = {
             // writing on Kafka topic
             const message = formattedResponse?.data?.col_texto;
             await producer.send({
-                topic: 'topic-1',
+                topic: 'tb01.post',
                 messages: [{ value: message }],
             });
 
