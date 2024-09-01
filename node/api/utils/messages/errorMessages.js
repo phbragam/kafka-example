@@ -1,14 +1,14 @@
 const ErrorMessages = {
-    // General
-    MISSING_BODY: "Request body não pode ser vazio.",
-    MISSING_FIELD: (field) => `O campo '${field}' é obrigatório.`,
-    INTERNAL_ERROR: "Erro interno do servidor.",
-    UNAUTHORIZED: "O usuário não está autenticado para realizar a operação.",
-    FORBIDDEN: "O usuário não tem as permissões necessárias para realizar a operação.",
+  // General
+  MISSING_BODY: "Request body cannot be empty.",
+  MISSING_FIELD: (field) => `The field '${field}' is required.`,
+  INTERNAL_ERROR: "Internal server error.",
+  UNAUTHORIZED: "The user is not authenticated to perform the operation.",
+  FORBIDDEN: "The user does not have the necessary permissions to perform the operation.",
 
-    // Http
-    NOT_FOUND: (entity, id) => `Nenhum registro de ${entity} encontrado com o id '${id}'.`,
-    CONFLICT: (entity, field) => `Um registro de ${entity} com esse '${field}' já existe.`,
-  };
-  
-  module.exports = ErrorMessages;
+  // Http
+  NOT_FOUND: (entity, id) => `No record found in the ${entity} table with the id '${id}'.`,
+  CONFLICT: (entity, field) => `A record in the ${entity} table with this '${field}' already exists.`,
+};
+
+module.exports = ErrorMessages;

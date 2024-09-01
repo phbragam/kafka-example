@@ -1,10 +1,10 @@
 const SuccessMessages = {
-  LIST_FOUND: (entity) => `Registros da tabela ${entity} retornados com sucesso.`,
-  FOUND: (entity) => `Registro da tabela ${entity} encontrado(a) com sucesso.`,
-  CREATED: (entity) => `Registro da tabela ${entity} criado com sucesso.`,
-  UPDATED: (entity) => `Registro da tabela ${entity} atualizado(a) com sucesso.`,
-  DELETED: (entity) => `Registro da tabela ${entity} deletado(a) com sucesso.`,
-  OPERATION_SUCCESSFUL: "Operação realizada com sucesso.",
+  LIST_FOUND: (entity) => `Records from the ${entity} table successfully retrieved.`,
+  FOUND: (entity) => `${entity} table record successfully found.`,
+  CREATED: (entity) => `${entity} table record successfully created.`,
+  UPDATED: (entity) => `${entity} table record successfully updated.`,
+  DELETED: (entity) => `${entity} table record successfully deleted.`,
+  OPERATION_SUCCESSFUL: "Operation successfully completed.",
 };
 
 module.exports = SuccessMessages;

@@ -10,14 +10,6 @@ function formatServiceResponse(response) {
 // Direct validations
 // Deal with request and response objects
 const tb01Controller = {
-    async findAll(req, res) {
-
-    },
-
-    async findById(req, res) {
-
-    },
-
     async create(req, res) {
         if (!req.body || Object.keys(req.body).length === 0) {
             return res.status(HttpStatusCodes.BAD_REQUEST).json({ erro: ErrorMessages.MISSING_BODY });
@@ -39,14 +31,6 @@ const tb01Controller = {
             return res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({ erro: err.message });
         }
     },
-
-    async update(req, res) {
-
-    },
-
-    async delete(req, res) {
-
-    }
 }
 
 module.exports = tb01Controller;
