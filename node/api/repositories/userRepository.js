@@ -3,7 +3,9 @@ const User = require('../models/user.js');
 // Database interactions
 const UserRepository = {
     async findAll() {
-        const response = await User.findAll();
+        const response = await User.findAll({
+            attributes: { exclude: ['password'] }
+        });
         return response;
     },
 
@@ -21,7 +23,9 @@ const UserRepository = {
 
     async create(data) {
         const response = await User.create(data);
-        return response;
+        const responseObject = response.toJSON();
+        delete responseObject.password;
+        return responseObject;
     },
 
     async update(id, data) {
@@ -39,7 +43,7 @@ const UserRepository = {
     },
 
     getModelName() {
-        return User.name; // This will return the model name
+        return User.name;
     }
 };
 

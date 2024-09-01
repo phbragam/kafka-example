@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 const UserRepository = require('../repositories/userRepository.js');
 const HttpStatusCodes = require('../utils/constants/httpStatusCodes.js');
 const SuccessMessages = require('../utils/messages/successMessages.js');
@@ -9,6 +11,7 @@ const thisEntity = UserRepository.getModelName().toLowerCase();
 const UserService = {
   async findAll() {
     const response = await UserRepository.findAll();
+
     return {
       message: SuccessMessages.LIST_FOUND(thisEntity),
       data: response,
@@ -25,6 +28,7 @@ const UserService = {
         httpStatus: HttpStatusCodes.NOT_FOUND
       };
     }
+
     return {
       message: SuccessMessages.FOUND(thisEntity),
       data: response,
@@ -45,7 +49,15 @@ const UserService = {
       };
     }
 
-    const response = await UserRepository.create(data);
+    const hashedPassword = await bcrypt.hash(data.password, 10);
+
+    const createData = {
+      username: data.username,
+      password: hashedPassword,
+      role: data.role
+    }
+
+    const response = await UserRepository.create(createData);
 
     return {
       message: SuccessMessages.CREATED(thisEntity),
@@ -63,21 +75,22 @@ const UserService = {
         httpStatus: HttpStatusCodes.NOT_FOUND
       };
     }
-
-    const conflictingUser = await UserRepository.findByName(data.username);
-    if (conflictingUser && conflictingUser.id.toString() !== id) {
-      const conflictingProperty = "username";
-      return {
-        message: ErrorMessages.CONFLICT(thisEntity, conflictingProperty),
-        details: { username: data.username, id: conflictingUser.id },
-        httpStatus: HttpStatusCodes.CONFLICT
-      };
+    const updateData = {};
+    if(data.username){
+      const conflictingUser = await UserRepository.findByName(data.username);
+      if (conflictingUser && conflictingUser.id.toString() !== id) {
+        const conflictingProperty = "username";
+        return {
+          message: ErrorMessages.CONFLICT(thisEntity, conflictingProperty),
+          details: { username: data.username, id: conflictingUser.id },
+          httpStatus: HttpStatusCodes.CONFLICT
+        };
+      }
+      updateData.username = username;
     }
 
-    // filter data to be updated
-    const updateData = {
-      username: data.username,
-      role: data.role
+    if (data.role) {
+      updateData.role = data.role;
     }
 
     await UserRepository.update(id, updateData);

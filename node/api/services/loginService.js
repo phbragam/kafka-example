@@ -1,4 +1,5 @@
-const Jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const HttpStatusCodes = require('../utils/constants/httpStatusCodes.js');
 const SuccessMessages = require('../utils/messages/successMessages.js');
@@ -16,15 +17,17 @@ const LoginService = {
         httpStatus: HttpStatusCodes.NOT_FOUND
       }
     }
-    if (foundUser.password !== data.password) {
+
+    const isPasswordValid = await bcrypt.compare(data.password, foundUser.password);
+    if (!isPasswordValid) {
       return {
         message: ErrorMessages.UNOUTHORIZED_LOGIN,
         httpStatus: HttpStatusCodes.UNAUTHORIZED
       }
     }
-    const user = { username: data.username, password: data.password, role: foundUser.role };
+    const user = { username: data.username, role: foundUser.role };
 
-    const accessToken = Jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+    const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10min' });
     return {
       message: SuccessMessages.OPERATION_SUCCESSFUL,
       data: { accessToken },
