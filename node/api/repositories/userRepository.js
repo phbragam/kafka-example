@@ -28,7 +28,6 @@ const userRepository = {
         const response = await User.update(data, {
             where: { id: id }
         });
-        console.log({id: response})
         return response;
     },
 
