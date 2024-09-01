@@ -56,47 +56,53 @@ const userService = {
 
   async update(id, data) {
     const existingUser = await userRepository.findById(id);
-      if (!existingUser) {
-        return { 
-          message: ErrorMessages.NOT_FOUND(thisEntity, id), 
-          details: { id },
-          httpStatus: HttpStatusCodes.NOT_FOUND
-        };
-      }
-
-      const conflictingUser = await userRepository.findByName(data.username);
-      if (conflictingUser && conflictingUser.id.toString() !== id) {
-        const conflictingProperty = "username";
-        return { 
-          message: ErrorMessages.CONFLICT(thisEntity, conflictingProperty), 
-          details: { username: data.username, id: conflictingUser.id },
-          httpStatus: HttpStatusCodes.CONFLICT
-        };
-      }
-
-      // filter data to be updated
-
-      const response = await userRepository.update(id, data);
-      return { 
-        message: SuccessMessages.UPDATED(thisEntity), 
-        data: response,
-        httpStatus: HttpStatusCodes.SUCCESS
+    if (!existingUser) {
+      return {
+        message: ErrorMessages.NOT_FOUND(thisEntity, id),
+        details: { id },
+        httpStatus: HttpStatusCodes.NOT_FOUND
       };
+    }
+
+    const conflictingUser = await userRepository.findByName(data.username);
+    if (conflictingUser && conflictingUser.id.toString() !== id) {
+      const conflictingProperty = "username";
+      return {
+        message: ErrorMessages.CONFLICT(thisEntity, conflictingProperty),
+        details: { username: data.username, id: conflictingUser.id },
+        httpStatus: HttpStatusCodes.CONFLICT
+      };
+    }
+
+    // filter data to be updated
+    const updateData = {
+      username: data.username,
+      role: data.role
+    }
+
+    await userRepository.update(id, updateData);
+    const updated = await userRepository.findById(id);
+
+    return {
+      message: SuccessMessages.UPDATED(thisEntity),
+      data: updated,
+      httpStatus: HttpStatusCodes.SUCCESS
+    };
   },
 
   async delete(id) {
-    const deletedRowsCount  = await userRepository.delete(id);
-      if (deletedRowsCount  === 0) {
-        return { 
-          message: ErrorMessages.NOT_FOUND(thisEntity, id), 
-          details: { id },
-          httpStatus: HttpStatusCodes.NOT_FOUND
-        };
-      }
-      return { 
-        message: SuccessMessages.DELETED(thisEntity), 
-        httpStatus: HttpStatusCodes.SUCCESS
+    const deletedRowsCount = await userRepository.delete(id);
+    if (deletedRowsCount === 0) {
+      return {
+        message: ErrorMessages.NOT_FOUND(thisEntity, id),
+        details: { id },
+        httpStatus: HttpStatusCodes.NOT_FOUND
       };
+    }
+    return {
+      message: SuccessMessages.DELETED(thisEntity),
+      httpStatus: HttpStatusCodes.SUCCESS
+    };
   }
 }
 
