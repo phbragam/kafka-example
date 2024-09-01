@@ -1,15 +1,11 @@
-const loginService = require('../services/loginService.js');
+const LoginService = require('../services/loginService.js');
+const ControllerUtils = require('../utils/controllerUtils.js');
 const HttpStatusCodes = require('../utils/constants/httpStatusCodes.js');
 const ErrorMessages = require('../utils/messages/errorMessages.js');
 
-function formatServiceResponse(response) {
-    const { httpStatus, error, ...formattedResponse } = response;
-    return formattedResponse;
-};
-
 // Direct validations
 // Deal with request and response objects
-const loginController = {
+const LoginController = {
     async login(req, res) {
         const { username, password } = req.body
 
@@ -24,8 +20,8 @@ const loginController = {
         }
 
         try {
-            const response = await loginService.login(req.body);
-            const formattedResponse = formatServiceResponse(response);
+            const response = await LoginService.login(req.body);
+            const formattedResponse = ControllerUtils.formatServiceResponse(response);
 
             return res.status(response.httpStatus).json(formattedResponse);
         } catch (err) {
@@ -34,4 +30,4 @@ const loginController = {
     },
 }
 
-module.exports = loginController;
+module.exports = LoginController;

@@ -1,7 +1,7 @@
 const User = require('../models/user.js');
 
 // Database interactions
-const userRepository = {
+const UserRepository = {
     async findAll() {
         const response = await User.findAll();
         return response;
@@ -43,4 +43,4 @@ const userRepository = {
     }
 };
 
-module.exports = userRepository;
+module.exports = UserRepository;

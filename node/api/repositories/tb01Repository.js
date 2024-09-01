@@ -1,7 +1,7 @@
 const Tb01 = require('../models/tb01.js');
 
 // Database interactions
-const tb01Repository = {
+const Tb01Repository = {
     async create(data) {
         const response = await Tb01.create(data);
         return response;
@@ -12,4 +12,4 @@ const tb01Repository = {
     }
 };
 
-module.exports = tb01Repository;
+module.exports = Tb01Repository;

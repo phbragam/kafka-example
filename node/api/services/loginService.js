@@ -1,14 +1,14 @@
-const jwt = require('jsonwebtoken');
+const Jwt = require('jsonwebtoken');
 
 const HttpStatusCodes = require('../utils/constants/httpStatusCodes.js');
 const SuccessMessages = require('../utils/messages/successMessages.js');
 const ErrorMessages = require('../utils/messages/errorMessages.js');
-const userRepository = require('../repositories/userRepository.js');
+const UserRepository = require('../repositories/userRepository.js');
 
 // Business rules (complex validations)
-const tb01Service = {
+const LoginService = {
   async login(data) {
-    const foundUser = await userRepository.findByName(data.username);
+    const foundUser = await UserRepository.findByName(data.username);
     if (!foundUser) {
       return {
         message: ErrorMessages.NOT_FOUND_LOGIN,
@@ -24,7 +24,7 @@ const tb01Service = {
     }
     const user = { username: data.username, password: data.password, role: foundUser.role };
 
-    const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+    const accessToken = Jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
     return {
       message: SuccessMessages.OPERATION_SUCCESSFUL,
       data: { accessToken },
@@ -33,4 +33,4 @@ const tb01Service = {
   }
 }
 
-module.exports = tb01Service;
+module.exports = LoginService;

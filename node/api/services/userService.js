@@ -1,14 +1,14 @@
-const userRepository = require('../repositories/userRepository.js');
+const UserRepository = require('../repositories/userRepository.js');
 const HttpStatusCodes = require('../utils/constants/httpStatusCodes.js');
 const SuccessMessages = require('../utils/messages/successMessages.js');
 const ErrorMessages = require('../utils/messages/errorMessages.js');
 
-const thisEntity = userRepository.getModelName().toLowerCase();
+const thisEntity = UserRepository.getModelName().toLowerCase();
 
 // Business rules (complex validations)
-const userService = {
+const UserService = {
   async findAll() {
-    const response = await userRepository.findAll();
+    const response = await UserRepository.findAll();
     return {
       message: SuccessMessages.LIST_FOUND(thisEntity),
       data: response,
@@ -17,7 +17,7 @@ const userService = {
   },
 
   async findById(id) {
-    const response = await userRepository.findById(id);
+    const response = await UserRepository.findById(id);
     if (!response) {
       return {
         message: ErrorMessages.NOT_FOUND(thisEntity, id),
@@ -33,7 +33,7 @@ const userService = {
   },
 
   async create(data) {
-    const existingUser = await userRepository.findByName(data.username);
+    const existingUser = await UserRepository.findByName(data.username);
 
     if (existingUser) {
       const conflictingProperty = "username";
@@ -45,7 +45,7 @@ const userService = {
       };
     }
 
-    const response = await userRepository.create(data);
+    const response = await UserRepository.create(data);
 
     return {
       message: SuccessMessages.CREATED(thisEntity),
@@ -55,7 +55,7 @@ const userService = {
   },
 
   async update(id, data) {
-    const existingUser = await userRepository.findById(id);
+    const existingUser = await UserRepository.findById(id);
     if (!existingUser) {
       return {
         message: ErrorMessages.NOT_FOUND(thisEntity, id),
@@ -64,7 +64,7 @@ const userService = {
       };
     }
 
-    const conflictingUser = await userRepository.findByName(data.username);
+    const conflictingUser = await UserRepository.findByName(data.username);
     if (conflictingUser && conflictingUser.id.toString() !== id) {
       const conflictingProperty = "username";
       return {
@@ -80,8 +80,8 @@ const userService = {
       role: data.role
     }
 
-    await userRepository.update(id, updateData);
-    const updated = await userRepository.findById(id);
+    await UserRepository.update(id, updateData);
+    const updated = await UserRepository.findById(id);
 
     return {
       message: SuccessMessages.UPDATED(thisEntity),
@@ -91,7 +91,7 @@ const userService = {
   },
 
   async delete(id) {
-    const deletedRowsCount = await userRepository.delete(id);
+    const deletedRowsCount = await UserRepository.delete(id);
     if (deletedRowsCount === 0) {
       return {
         message: ErrorMessages.NOT_FOUND(thisEntity, id),
@@ -106,4 +106,4 @@ const userService = {
   }
 }
 
-module.exports = userService;
+module.exports = UserService;
