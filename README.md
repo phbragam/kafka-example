@@ -115,7 +115,7 @@ BROKER_KAFKA_HOST=your_kafka_broker_host
   - **URL**: `/user/:id`
   - **Description**: Deletes the user with the specified `id`.
 
-### Login Operation
+### Authentication
 
 For user authentication, you need to verify the user's `username` and `password`. The login operation checks if the provided credentials match any existing user in the database.
 
@@ -135,7 +135,7 @@ For user authentication, you need to verify the user's `username` and `password`
      - **Failed Login**: The system returns an error indicating that the login attempt was unsuccessful.
 
 
-## Tb01 Endpoint
+### Tb01 Endpoint
 
 - **Create New record**
   - **Method**: `POST`
