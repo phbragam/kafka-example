@@ -7,27 +7,45 @@
 
 ## Setup
 
-- Install Nodejs and Kafka in your machine.
-- Clone this repository.
-- Create .env file in your node/api folder with the beneath configuration:
+### 1. Install Dependencies
+- Install Node.js and Kafka on your machine.
 
-    -DB_HOST=your_database_host
-    -DB_PORT=your_database_port
-    -DB_NAME=your_database_name
-    -DB_USER=your_database_user
-    -DB_PASSWORD=your_database_password
-    -APP_PORT=your_application_port
-    -ACCESS_TOKEN_SECRET=your_access_token_secret
-    -BROKER_KAFKA_HOST=your_kafka_broker_host
+## 2. Clone the Repository
+- Clone this repository to your local machine.
 
-- Create .env file in your node/logging-server folder with beneath configuration:
+### 3. Configure Environment Variables
 
-    -BROKER_KAFKA_HOST=your_kafka_broker_host
+#### For the API
+- Create a `.env` file in the `node/api` folder with the following configuration:
 
-- Run npm i in both node/api folder ande node/logging-server folder.
-- Run node/api/index.js and node/logging-server/index.js.
+
+```env
+DB_HOST=your_database_host
+DB_PORT=your_database_port
+DB_NAME=your_database_name
+DB_USER=your_database_user
+DB_PASSWORD=your_database_password
+APP_PORT=your_application_port
+ACCESS_TOKEN_SECRET=your_access_token_secret
+BROKER_KAFKA_HOST=your_kafka_broker_host
+
+#### For the Logging Server
+- Create a `.env` file in the `node/logging-server` folder with the following configuration:
+
+```env
+BROKER_KAFKA_HOST=your_kafka_broker_host
+
+## 4. Install Node.js Dependencies
+- Run `npm i` in both the `node/api` folder and the `node/logging-server` folder.
+
+## 5. Start the Applications
+- Run `node api/index.js` and `node logging-server/index.js`.
+
+## 6. Start Kafka and Zookeeper
 - Run Zookeeper and the Kafka broker.
-- Create the topics 'tb01.post' and 'logs.summary' in the Kafka broker.
+
+## 7. Create Kafka Topics
+- Create the topics `tb01.post` and `logs.summary` in the Kafka broker.
 
 ## API documentation
 
