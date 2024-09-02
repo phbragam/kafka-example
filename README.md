@@ -1,4 +1,4 @@
-# CRUD application with Kafka logging server
+# API and Kafka logging server
 
 ## Explanation
 
