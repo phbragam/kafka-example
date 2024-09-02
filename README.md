@@ -2,15 +2,14 @@
 
 ## Explanation
 
-- The project consists in an API with crud and login operations for users. Users can authenticate and then are enabled to post in tb01 if they have the expected permission. The tb01 post enpoint is configured with a Kafka producer. The producer comunicates with the Kafka broker in topic 'tb01.post' and the consumer is a logging-server that prints the value of 'col_texto' from tb01 new records in the terminal. This consumer also has a producer configured, so, after the print operation, it produces a message to the 'logs.summary' topic that can be consumed by other services.
-
+ This project consists in an API with crud and login operations for users. Users can authenticate and then are enabled to post in `tb01` if they have the expected permission. The `tb01` post enpoint is configured with a Kafka producer. The producer comunicates with the Kafka broker in topic `tb01.post` and the consumer is a logging-server that prints the value of `col_texto` from `tb01` new records in the terminal. This consumer also has a producer configured, so, after the print operation, it produces a message to the `logs.summary` topic that can be consumed by other services.
 
 ## Setup
 
 ### 1. Install Dependencies
 - Install Node.js and Kafka on your machine.
 
-## 2. Clone the Repository
+### 2. Clone the Repository
 - Clone this repository to your local machine.
 
 ### 3. Configure Environment Variables
@@ -43,11 +42,11 @@ BROKER_KAFKA_HOST=your_kafka_broker_host
 ## 5. Start the Applications
 - Run `node api/index.js` and `node logging-server/index.js`.
 
-## 6. Start Kafka and Zookeeper
-- Run Zookeeper and the Kafka broker.
-
-## 7. Create Kafka Topics
+## 6. Create Kafka Topics
 - Create the topics `tb01.post` and `logs.summary` in the Kafka broker.
+
+## 7. Start Kafka and Zookeeper
+- Run Zookeeper and the Kafka broker.
 
 ## API documentation
 
@@ -65,7 +64,7 @@ BROKER_KAFKA_HOST=your_kafka_broker_host
     - **Description**: The username for the user, required for login.
   - **password**: 
     - **Type**: `TEXT`
-    - **Description**: The user's password, stored as text.
+    - **Description**: The user's password, stored encrypted as text.
   - **role**: 
     - **Type**: `ENUM('admin', 'guest')`
     - **Description**: Defines the role of the user, either 'admin' or 'guest'. Defaults to 'guest'.
@@ -85,7 +84,7 @@ BROKER_KAFKA_HOST=your_kafka_broker_host
   - **col_texto**: 
     - **Type**: `TEXT`
     - **Description**: A text field containing the content to be stored, required.
-  - **createdAt**: 
+  - **col_dt**: 
     - **Type**: `DATE`
     - **Description**: The date and time when the record was created. Defaults to the current date and time.
 
