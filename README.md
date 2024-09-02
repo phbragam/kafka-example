@@ -36,16 +36,16 @@ BROKER_KAFKA_HOST=your_kafka_broker_host
 BROKER_KAFKA_HOST=your_kafka_broker_host
 ```
 
-## 4. Install Node.js Dependencies
+### 4. Install Node.js Dependencies
 - Run `npm i` in both the `node/api` folder and the `node/logging-server` folder.
 
-## 5. Start the Applications
+### 5. Start the Applications
 - Run `node api/index.js` and `node logging-server/index.js`.
 
-## 6. Create Kafka Topics
+### 6. Create Kafka Topics
 - Create the topics `tb01.post` and `logs.summary` in the Kafka broker.
 
-## 7. Start Kafka and Zookeeper
+### 7. Start Kafka and Zookeeper
 - Run Zookeeper and the Kafka broker.
 
 ## API documentation
