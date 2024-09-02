@@ -28,12 +28,14 @@ DB_PASSWORD=your_database_password
 APP_PORT=your_application_port
 ACCESS_TOKEN_SECRET=your_access_token_secret
 BROKER_KAFKA_HOST=your_kafka_broker_host
+```
 
 #### For the Logging Server
 - Create a `.env` file in the `node/logging-server` folder with the following configuration:
 
 ```env
 BROKER_KAFKA_HOST=your_kafka_broker_host
+```
 
 ## 4. Install Node.js Dependencies
 - Run `npm i` in both the `node/api` folder and the `node/logging-server` folder.
